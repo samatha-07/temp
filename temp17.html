@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      function changeColor() {
+        let color = document.getElementById("txtColor").value;
+        txtDiv.style.color = color;
+      }
+    </script>
+  </head>
+  <body>
+    <input type="text" id="txtColor" />
+    <button onclick="changeColor()">Submit</button>
+    <div id="txtDiv">Hello World</div>
+  </body>
+</html>

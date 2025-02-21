@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      const products = [
+        { id: 1, name: "P1", price: 34 },
+        { id: 2, name: "P2", price: 50 },
+        { id: 3, name: "P3", price: 40 },
+      ];
+      const cart = {};
+      const addToCart = (id) => {
+        cart[id] = 1;
+        showCart();
+      };
+      const showCart = () => {
+        let str = "";
+        products.map((value) => {
+          if (cart[value.id]) {
+            str += `<div>${value.id}-${value.name}-${value.price}-<button>-</button>${cart[value.id]}<button>+</button>-${value.price*cart[value.id]}</div>`;
+          }
+        });
+        divCart.innerHTML = str;
+      };
+      const showProducts = () => {
+        let str = "";
+        products.map((value) => {
+          str += `<div>${value.id}-${value.name}-${value.price}-<button onclick='addToCart(${value.id})'>Add to Cart</button></div>`;
+        });
+        divProducts.innerHTML = str;
+      };
+    </script>
+  </head>
+  <body onload="showProducts()">
+    <h1>My Store</h1>
+    <hr />
+    <h3>Products</h3>
+    <div id="divProducts"></div>
+    <h3>My Cart</h3>
+    <div id="divCart"></div>
+  </body>
+</html>
