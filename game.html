@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catch the Falling Object Game</title>
+    <style>
+        body {
+            text-align: center;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            background: #87CEEB;
+            display: block;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Catch the Falling Object</h1>
+    <p>Use Left and Right Arrow keys to move the basket.</p>
+    <p>Score: <span id="score">0</span></p>
+    <canvas id="gameCanvas" width="400" height="500"></canvas>
+    
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+
+        const basket = { x: 175, y: 450, width: 50, height: 20, speed: 20 };
+        const ball = { x: Math.random() * 380, y: 0, radius: 10, speed: 3 };
+        let score = 0;
+          
+        function drawBasket() {
+            ctx.fillStyle = "brown";
+            ctx.fillRect(basket.x, basket.y, basket.width, basket.height);
+        }
+        
+        function drawBall() {
+            ctx.fillStyle = "red";
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        
+        function updateBall() {
+            ball.y += ball.speed;
+            if (ball.y + ball.radius >= basket.y && ball.x >= basket.x && ball.x <= basket.x + basket.width) {
+                score++;
+                document.getElementById("score").innerText = score;
+                resetBall();
+            } else if (ball.y > canvas.height) {
+                resetBall();
+            }
+        }
+        
+        function resetBall() {
+            ball.x = Math.random() * 380;
+            ball.y = 0;
+        }
+        
+        function moveBasket(event) {
+            if (event.key === "ArrowLeft" && basket.x > 0) {
+                basket.x -= basket.speed;
+            } else if (event.key === "ArrowRight" && basket.x < canvas.width - basket.width) {
+                basket.x += basket.speed;
+            }
+        }
+        
+        function gameLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBasket();
+            drawBall();
+            updateBall();
+            requestAnimationFrame(gameLoop);
+        }
+        
+        document.addEventListener("keydown", moveBasket);
+        gameLoop();
+    </script>
+</body> 
+</html>
